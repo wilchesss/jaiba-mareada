@@ -53,7 +53,7 @@ a { color: var(--turquesa); }
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 20px;
+  padding: calc(14px + env(safe-area-inset-top)) 16px 14px calc(20px + env(safe-area-inset-left));
   background: var(--marino);
   color: var(--blanco);
   position: sticky;
@@ -70,16 +70,28 @@ a { color: var(--turquesa); }
 
 .app-bar h1 {
   color: var(--blanco);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .app-bar button.icon-btn {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
+  border-radius: 50%;
   color: var(--arena);
-  font-size: 1.1rem;
-  padding: 6px;
+  font-size: 1.25rem;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
 }
 
 /* ---------------- Login ---------------- */
