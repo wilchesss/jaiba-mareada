@@ -334,10 +334,19 @@ async function renderDetalleReservacion(reservacion) {
   }
 }
 
+function mensajeAmigable(err) {
+  const msg = err.message || '';
+  if (err.code === '23505' || msg.includes('duplicate key') || msg.includes('reservaciones_fecha_key')) {
+    return 'Esa fecha ya fue tomada (por una reservación o un día cerrado). Elige otra fecha.';
+  }
+  if (msg) return msg;
+  return 'Ocurrió un error. Intenta de nuevo.';
+}
+
 function mostrarErrorEnModal(elementId, err) {
   const el = document.getElementById(elementId);
   if (!el) return;
-  el.textContent = err.message || 'Ocurrió un error. Intenta de nuevo.';
+  el.textContent = mensajeAmigable(err);
   el.classList.remove('oculto');
 }
 
