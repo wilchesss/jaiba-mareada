@@ -11,10 +11,13 @@ jobs:
     steps:
       - name: Actualizar heartbeat en Supabase
         run: |
-          curl -X PATCH "${{ secrets.SUPABASE_URL }}/rest/v1/heartbeat?id=eq.1" \
+          http_code=$(curl -s -o respuesta.json -w "%{http_code}" -X PATCH "${{ secrets.SUPABASE_URL }}/rest/v1/heartbeat?id=eq.1" \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Content-Type: application/json" \
             -H "Prefer: return=minimal" \
-            -d '{"pinged_at": "now()"}' \
-            --fail
+            -d '{"pinged_at": "now()"}')
+          echo "Código HTTP: $http_code"
+          echo "Respuesta de Supabase:"
+          cat respuesta.json
+          if [ "$http_code" -ge 400 ]; then exit 1; fi
