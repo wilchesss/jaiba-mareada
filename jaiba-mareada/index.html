@@ -68,7 +68,8 @@
 
     <!-- Vista: Lista de reservaciones -->
     <section id="vista-lista" class="oculto">
-      <h2 style="margin-bottom:14px;">Reservaciones del mes</h2>
+      <h2 style="margin-bottom:4px;">Próximas reservaciones</h2>
+      <p id="rango-lista" style="color:var(--gris-texto); font-size:0.85rem; margin:0 0 14px;"></p>
       <div id="lista-reservaciones"></div>
     </section>
   </main>
@@ -76,8 +77,8 @@
   <button class="fab" id="btn-nueva-reservacion" title="Nueva reservación">+</button>
 
   <nav class="nav-inferior">
-    <button class="activo" data-vista="calendario">📅<span>Calendario</span></button>
-    <button data-vista="lista">📋<span>Lista</span></button>
+    <button class="activo" data-vista="calendario"><span class="nav-icono">📅</span><span class="nav-texto">Calendario</span></button>
+    <button data-vista="lista"><span class="nav-icono">📋</span><span class="nav-texto">Lista</span></button>
   </nav>
 </div>
 
