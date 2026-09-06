@@ -1,0 +1,28 @@
+name: Respaldo diario de Supabase
+
+on:
+  schedule:
+    - cron: '0 9 * * *'   # todos los días a las 9:00 UTC (~3am o 4am hora de Guadalajara)
+  workflow_dispatch:
+
+jobs:
+  respaldo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exportar tablas
+        run: |
+          mkdir -p respaldo
+          fecha=$(date +%Y-%m-%d)
+          for tabla in reservaciones pagos dias_cerrados; do
+            curl -s "${{ secrets.SUPABASE_URL }}/rest/v1/${tabla}?select=*" \
+              -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+              -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+              -o "respaldo/${tabla}_${fecha}.json"
+          done
+
+      - name: Subir respaldo como artefacto privado
+        uses: actions/upload-artifact@v4
+        with:
+          name: respaldo-supabase-${{ github.run_id }}
+          path: respaldo/
+          retention-days: 90
