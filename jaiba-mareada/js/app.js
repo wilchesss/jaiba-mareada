@@ -1,4 +1,4 @@
-import { iniciarSesion, cerrarSesion, obtenerSesion, onAuthChange } from './supabase-client.js';
+import { iniciarSesion, cerrarSesion, obtenerSesion, onAuthChange, obtenerReservacionesRango } from './supabase-client.js';
 import {
   estadoCalendario, mesSiguiente, mesAnterior, cargarDatosMes, renderCalendario,
 } from './calendario.js';
@@ -96,13 +96,28 @@ document.getElementById('btn-nueva-reservacion').addEventListener('click', () =>
   renderFormularioReservacion(fechaStr);
 });
 
+let reservacionesProximas = [];
+
+function fechaISO(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
 async function cargarYRenderizar() {
   mostrarCargando(true);
   try {
-    await cargarDatosMes();
+    const hoy = new Date();
+    const en30Dias = new Date();
+    en30Dias.setDate(hoy.getDate() + 30);
+
+    const [_, proximas] = await Promise.all([
+      cargarDatosMes(),
+      obtenerReservacionesRango(fechaISO(hoy), fechaISO(en30Dias)),
+    ]);
+    reservacionesProximas = proximas;
+
     const { mapaReservaciones, mapaCerrados } = renderCalendario();
     conectarClicksDias(mapaReservaciones, mapaCerrados);
-    renderListaReservaciones();
+    renderListaReservaciones(hoy, en30Dias);
   } catch (err) {
     mostrarToast(err.message || 'Error al cargar datos', true);
   } finally {
@@ -119,14 +134,19 @@ function conectarClicksDias(mapaReservaciones, mapaCerrados) {
   });
 }
 
-function renderListaReservaciones() {
+function renderListaReservaciones(hoy, en30Dias) {
   const cont = document.getElementById('lista-reservaciones');
-  const { reservaciones } = estadoCalendario;
-  if (reservaciones.length === 0) {
-    cont.innerHTML = '<p class="centro-vacio">No hay reservaciones este mes.</p>';
+  const rangoEl = document.getElementById('rango-lista');
+  if (rangoEl && hoy && en30Dias) {
+    const fmtCorta = (d) => d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+    rangoEl.textContent = `Del ${fmtCorta(hoy)} al ${fmtCorta(en30Dias)}`;
+  }
+
+  if (reservacionesProximas.length === 0) {
+    cont.innerHTML = '<p class="centro-vacio">No hay reservaciones en los próximos 30 días.</p>';
     return;
   }
-  cont.innerHTML = reservaciones.map((r) => `
+  cont.innerHTML = reservacionesProximas.map((r) => `
     <div class="tarjeta-reservacion" data-id="${r.id}">
       <div class="fila-top">
         <span class="fecha">${fmtFechaCorta(r.fecha)}</span>
@@ -140,7 +160,7 @@ function renderListaReservaciones() {
 
   cont.querySelectorAll('.tarjeta-reservacion').forEach((card) => {
     card.addEventListener('click', () => {
-      const r = estadoCalendario.reservaciones.find((x) => x.id === card.dataset.id);
+      const r = reservacionesProximas.find((x) => x.id === card.dataset.id);
       abrirModalDia(r.fecha, r, null);
     });
   });
