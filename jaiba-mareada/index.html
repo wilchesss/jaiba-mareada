@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>La Jaiba Mareada — Reservaciones</title>
+
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0b2c4d" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ==================== LOGIN ==================== -->
+<section id="pantalla-login" class="login-screen">
+  <div class="login-card">
+    <img class="logo" src="icons/icon-192.png" alt="La Jaiba Mareada" />
+    <h1>La Jaiba Mareada</h1>
+    <p class="subtitulo">Panel de reservaciones</p>
+    <form id="form-login">
+      <div class="campo">
+        <label for="login-email">Correo</label>
+        <input type="email" id="login-email" required autocomplete="username" />
+      </div>
+      <div class="campo">
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" required autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn-primario" id="btn-login">Entrar</button>
+      <p class="error-msg oculto" id="login-error"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ==================== APP ==================== -->
+<div id="app" class="oculto">
+  <header class="app-bar">
+    <img class="logo" src="icons/icon-192.png" alt="Logo" />
+    <h1>La Jaiba Mareada</h1>
+    <button class="icon-btn" id="btn-logout" title="Cerrar sesión">⏻</button>
+  </header>
+
+  <main>
+    <!-- Vista: Calendario -->
+    <section id="vista-calendario">
+      <div class="calendario-header">
+        <button id="mes-anterior">‹</button>
+        <h2 id="mes-actual">Mes</h2>
+        <button id="mes-siguiente">›</button>
+      </div>
+      <div class="leyenda">
+        <span><i class="punto libre"></i>Libre</span>
+        <span><i class="punto apartado"></i>Apartado</span>
+        <span><i class="punto cerrado"></i>Cerrado</span>
+      </div>
+      <div class="dias-semana">
+        <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+      </div>
+      <div class="grid-calendario" id="grid-calendario"></div>
+    </section>
+
+    <!-- Vista: Lista de reservaciones -->
+    <section id="vista-lista" class="oculto">
+      <h2 style="margin-bottom:14px;">Reservaciones del mes</h2>
+      <div id="lista-reservaciones"></div>
+    </section>
+  </main>
+
+  <button class="fab" id="btn-nueva-reservacion" title="Nueva reservación">+</button>
+
+  <nav class="nav-inferior">
+    <button class="activo" data-vista="calendario">📅<span>Calendario</span></button>
+    <button data-vista="lista">📋<span>Lista</span></button>
+  </nav>
+</div>
+
+<!-- ==================== MODAL: Día / Reservación ==================== -->
+<div id="modal-overlay" class="modal-overlay oculto">
+  <div class="modal" id="modal-contenido"></div>
+</div>
+
+<div id="toast" class="toast oculto"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

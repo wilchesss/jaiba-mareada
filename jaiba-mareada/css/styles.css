@@ -1,0 +1,501 @@
+:root {
+  --marino: #0b2c4d;
+  --marino-oscuro: #071c33;
+  --turquesa: #1fa9a3;
+  --turquesa-suave: #dbf2ef;
+  --arena: #f2e6c9;
+  --arena-suave: #faf6ea;
+  --coral: #e8734a;
+  --coral-oscuro: #c85a34;
+  --tinta: #12232e;
+  --gris-texto: #5c6b73;
+  --blanco: #fffdf8;
+  --borde: #e2d9c2;
+  --rojo-error: #c0392b;
+  --sombra: 0 4px 16px rgba(11, 44, 77, 0.12);
+  --radio: 14px;
+  --fuente-titulo: 'Fraunces', Georgia, serif;
+  --fuente-cuerpo: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--arena-suave);
+  color: var(--tinta);
+  font-family: var(--fuente-cuerpo);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  padding-bottom: 72px; /* espacio para nav inferior */
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  margin: 0;
+  color: var(--marino);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a { color: var(--turquesa); }
+
+/* ---------------- App bar ---------------- */
+.app-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--marino);
+  color: var(--blanco);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.app-bar img.logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.app-bar h1 {
+  color: var(--blanco);
+  font-size: 1.15rem;
+  flex: 1;
+}
+
+.app-bar button.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--arena);
+  font-size: 1.1rem;
+  padding: 6px;
+}
+
+/* ---------------- Login ---------------- */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--marino) 0%, var(--marino-oscuro) 100%);
+  padding: 24px;
+}
+
+.login-card {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  padding: 36px 28px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.login-card img.logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  object-fit: cover;
+}
+
+.login-card h1 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.login-card p.subtitulo {
+  color: var(--gris-texto);
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.campo {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.campo label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--marino);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--borde);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: var(--blanco);
+  color: var(--tinta);
+}
+
+.campo input:focus,
+.campo select:focus {
+  outline: none;
+  border-color: var(--turquesa);
+}
+
+.btn-primario {
+  width: 100%;
+  padding: 13px;
+  background: var(--coral);
+  color: var(--blanco);
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.btn-primario:hover { background: var(--coral-oscuro); }
+.btn-primario:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secundario {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: var(--marino);
+  border: 1.5px solid var(--marino);
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.error-msg {
+  color: var(--rojo-error);
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+
+/* ---------------- Contenedor principal ---------------- */
+main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ---------------- Calendario ---------------- */
+.calendario-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 16px;
+}
+
+.calendario-header h2 {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
+
+.calendario-header button {
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  color: var(--marino);
+  font-size: 1rem;
+}
+
+.leyenda {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  color: var(--gris-texto);
+}
+
+.leyenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.punto.libre { background: var(--turquesa-suave); border: 1.5px solid var(--turquesa); }
+.punto.apartado { background: var(--coral); }
+.punto.cerrado { background: var(--gris-texto); }
+
+.dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--marino);
+  margin-bottom: 6px;
+}
+
+.grid-calendario {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.dia-celda {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  color: var(--tinta);
+  position: relative;
+}
+
+.dia-celda.vacio { background: transparent; border: none; }
+
+.dia-celda.libre {
+  background: var(--turquesa-suave);
+  border-color: var(--turquesa);
+  color: var(--marino);
+}
+
+.dia-celda.apartado {
+  background: var(--coral);
+  border-color: var(--coral-oscuro);
+  color: var(--blanco);
+}
+
+.dia-celda.cerrado {
+  background: repeating-linear-gradient(135deg, #d8d2c2, #d8d2c2 4px, #cfc8b6 4px, #cfc8b6 8px);
+  color: var(--gris-texto);
+  border-color: var(--borde);
+}
+
+.dia-celda.hoy { box-shadow: 0 0 0 2px var(--marino) inset; }
+
+/* ---------------- Botón flotante ---------------- */
+.fab {
+  position: fixed;
+  bottom: 88px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--blanco);
+  border: none;
+  font-size: 1.6rem;
+  box-shadow: var(--sombra);
+  z-index: 15;
+}
+
+/* ---------------- Nav inferior ---------------- */
+.nav-inferior {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--blanco);
+  border-top: 1px solid var(--borde);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  z-index: 20;
+}
+
+.nav-inferior button {
+  background: transparent;
+  border: none;
+  color: var(--gris-texto);
+  font-size: 0.72rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 14px;
+}
+
+.nav-inferior button.activo { color: var(--coral); font-weight: 700; }
+
+/* ---------------- Tarjetas de lista ---------------- */
+.tarjeta-reservacion {
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.tarjeta-reservacion .fila-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.tarjeta-reservacion .fecha {
+  font-weight: 700;
+  color: var(--marino);
+  text-transform: capitalize;
+}
+
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.badge.pagado { background: #dcf3e3; color: #237a41; }
+.badge.anticipo_cubierto { background: var(--arena); color: var(--coral-oscuro); }
+.badge.pendiente { background: #fde3de; color: var(--rojo-error); }
+
+.tarjeta-reservacion .cliente { font-size: 0.95rem; margin-bottom: 2px; }
+.tarjeta-reservacion .detalle { font-size: 0.82rem; color: var(--gris-texto); }
+.tarjeta-reservacion .saldo { font-size: 0.85rem; font-weight: 700; color: var(--marino); margin-top: 6px; }
+
+/* ---------------- Modal ---------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 44, 77, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 30;
+}
+
+.modal {
+  background: var(--blanco);
+  width: 100%;
+  max-width: 480px;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 20px 20px 0 0;
+  padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-header button {
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--gris-texto);
+}
+
+.resumen-costo {
+  background: var(--turquesa-suave);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 14px 0;
+  font-size: 0.9rem;
+}
+
+.resumen-costo .linea {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.resumen-costo .linea.total {
+  font-weight: 700;
+  color: var(--marino);
+  border-top: 1px solid rgba(11, 44, 77, 0.15);
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+.acciones-modal {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.acciones-modal .btn-peligro {
+  background: transparent;
+  border: 1.5px solid var(--rojo-error);
+  color: var(--rojo-error);
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.lista-pagos {
+  margin-top: 10px;
+}
+
+.pago-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--borde);
+  font-size: 0.88rem;
+}
+
+.pago-item button {
+  background: transparent;
+  border: none;
+  color: var(--rojo-error);
+  font-size: 0.95rem;
+}
+
+.centro-vacio {
+  text-align: center;
+  color: var(--gris-texto);
+  padding: 40px 20px;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  border: 3px solid var(--turquesa-suave);
+  border-top: 3px solid var(--turquesa);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  animation: girar 0.8s linear infinite;
+  margin: 30px auto;
+}
+
+@keyframes girar { to { transform: rotate(360deg); } }
+
+.toast {
+  position: fixed;
+  bottom: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--marino);
+  color: var(--blanco);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  z-index: 50;
+  box-shadow: var(--sombra);
+}
+
+.toast.error { background: var(--rojo-error); }
+
+.oculto { display: none !important; }
