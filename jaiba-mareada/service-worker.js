@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jaiba-mareada-v1';
+const CACHE_NAME = 'jaiba-mareada-v2';
 const ARCHIVOS_CORE = [
   '/',
   '/index.html',
@@ -29,16 +29,24 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Network-first para llamadas a Supabase (datos siempre frescos),
-// cache-first para el shell de la app (assets estáticos).
+// Network-first para todo (Supabase y el shell de la app): siempre intenta
+// traer la versión más reciente de internet, y solo usa la copia guardada
+// si no hay conexión. Así los cambios que subamos se ven de inmediato,
+// sin depender de que el teléfono detecte una versión nueva del cache.
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
   if (url.hostname.includes('supabase.co')) {
-    return; // dejar pasar directo a la red
+    return; // dejar pasar directo a la red, sin pasar por cache
   }
 
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
+    fetch(event.request)
+      .then((respuesta) => {
+        const copia = respuesta.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copia));
+        return respuesta;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
