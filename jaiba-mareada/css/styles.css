@@ -308,21 +308,21 @@ main {
 /* ---------------- Botón flotante ---------------- */
 .fab {
   position: fixed;
-  bottom: calc(88px + env(safe-area-inset-bottom));
+  bottom: calc(96px + env(safe-area-inset-bottom));
   right: 20px;
-  width: 56px;
-  height: 56px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   background: var(--coral);
   color: var(--blanco);
   border: none;
-  font-size: 1.8rem;
+  font-size: 2rem;
   line-height: 1;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--sombra);
+  box-shadow: 0 6px 20px rgba(11, 44, 77, 0.28);
   z-index: 15;
 }
 
@@ -334,7 +334,7 @@ main {
   border-top: 1px solid var(--borde);
   display: flex;
   justify-content: space-around;
-  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
   z-index: 20;
 }
 
@@ -342,15 +342,26 @@ main {
   background: transparent;
   border: none;
   color: var(--gris-texto);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 4px 14px;
+  gap: 4px;
+  padding: 6px 22px;
+  border-radius: 12px;
 }
 
-.nav-inferior button.activo { color: var(--coral); font-weight: 700; }
+.nav-inferior .nav-icono {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.nav-inferior .nav-texto {
+  font-weight: 600;
+}
+
+.nav-inferior button.activo { color: var(--coral); }
+.nav-inferior button.activo .nav-icono { transform: scale(1.05); }
 
 /* ---------------- Tarjetas de lista ---------------- */
 .tarjeta-reservacion {
