@@ -1,0 +1,20 @@
+name: Mantener Supabase activo
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # cada hora, en punto
+  workflow_dispatch:        # también permite correrlo manualmente desde GitHub
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Actualizar heartbeat en Supabase
+        run: |
+          curl -X PATCH "${{ secrets.SUPABASE_URL }}/rest/v1/heartbeat?id=eq.1" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=minimal" \
+            -d '{"pinged_at": "now()"}' \
+            --fail
