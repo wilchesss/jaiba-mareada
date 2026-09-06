@@ -2,8 +2,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 // ⚠️ Reemplaza estos dos valores con los de tu proyecto de Supabase
 // (Project Settings → API → Project URL / anon public key)
-const SUPABASE_URL = 'https://exvnatugthbarhdsstuj.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4dm5hdHVndGhiYXJoZHNzdHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NTE5NTMsImV4cCI6MjEwNDIyNzk1M30.gxNX5wQsDHa7a4iu_8SCxHO7Ih56QMf9Ko4abac-M1M';
+const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+const SUPABASE_ANON_KEY = 'TU-ANON-KEY-AQUI';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -33,6 +33,18 @@ export function onAuthChange(callback) {
 // ---------------------------------------------------------------------
 // Reservaciones
 // ---------------------------------------------------------------------
+export async function obtenerReservacionesRango(fechaInicio, fechaFin) {
+  const { data, error } = await supabase
+    .from('vista_reservaciones_saldo')
+    .select('*')
+    .gte('fecha', fechaInicio)
+    .lte('fecha', fechaFin)
+    .order('fecha', { ascending: true });
+
+  if (error) throw error;
+  return data;
+}
+
 export async function obtenerReservacionesMes(anio, mes) {
   const inicio = `${anio}-${String(mes).padStart(2, '0')}-01`;
   const finMes = new Date(anio, mes, 0).getDate();
